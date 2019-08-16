@@ -7,11 +7,9 @@ var express = require("express"),
 app.use(express.static(__dirname + "/public"));
 app.use(require("body-parser").urlencoded({extended:false}));
 
-//Conectar ao banco de dados e criar modelos a partir dos schemas
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/sistadv");
-
-//Rotas
-
+//Conectar ao banco de dados
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/sistadv", { useNewUrlParser: true });
+console.log(mongoose);
 
 //Inicia o servidor
 app.listen(port, ()=>{
