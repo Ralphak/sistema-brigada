@@ -1,26 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema Brigada de Realengo</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <p>sucesso!
-      <a href="login.html">Login</a>
-    </p>
-  </body>
-  <!-- update the version number as needed -->
-  <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
-  <!-- include only the Firebase features as you need -->
-  <script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
-  <script defer src="/__/firebase/6.6.1/firebase-firestore.js"></script>
-  <script defer src="/__/firebase/6.6.1/firebase-storage.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
-  <!-- load remaining scripts here-->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script defer src="js/scripts.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema Brigada de Realengo</title>
+  <link rel="icon" href="img/icone.png">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <!-- barra de menus -->
+  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6E1A23; font-size: 1.25rem;">
+    <button class="navbar-toggler mr-2 collapsed" type="button" data-toggle="collapse" data-target="#navbarMenu"
+      aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand mr-auto" href="#">
+      <img src="img/icone navbar.png">
+    </a>
+    <div class="dropdown order-sm-2">
+      <a aria-expanded="false" data-toggle="dropdown" role="button" id="navbarDropdownMenuLink" href="#"
+        class="dropdown-toggle" style="color: white;"></a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink"
+        style="font-size: 1.2rem;">
+        <a class="dropdown-item" href="#">Alterar senha</a>
+        <a class="dropdown-item" href="#" id="linkLogout">Sair</a>
+      </div>
+    </div>
+    <div class="navbar-collapse order-sm-1 collapse" id="navbarMenu">
+      <div class="navbar-nav ml-2">
+        <a class="nav-link active" href="#">Ativo</a>
+        <a class="nav-link" href="#">Inativo</a>
+      </div>
+    </div>
+  </nav>
+  <!-- espaço da página carregada -->
+  <div id="divPagina">Página principal</div>
+</body>
+
+<script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
+<script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
+<script defer src="/__/firebase/6.6.1/firebase-firestore.js"></script>
+<script defer src="/__/firebase/6.6.1/firebase-storage.js"></script>
+<script defer src="/__/firebase/init.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script defer src="js/index.js"></script>
+
 </html>

@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema Brigada de Realengo</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="row vw-100 vh-100 justify-content-center align-content-center">
-        <form class="ml-4">
-            <img src="img/logo brigada.jpeg" alt="Brigada de Incêndio" class="mb-2">
-            <input type="email" class="form-control mb-2" id="loginEmail" placeholder="Email">
-            <input type="password" class="form-control mb-2" id="loginSenha" placeholder="Senha">
-            <button type="submit" class="btn btn-danger">Entrar</button>
-        </form>
-    </div>
-  </body>
-  <!-- update the version number as needed -->
-  <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
-  <!-- include only the Firebase features as you need -->
-  <script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
-  <script defer src="/__/firebase/6.6.1/firebase-firestore.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
-  <!-- load remaining scripts here-->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script defer src="js/scripts.js"></script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema Brigada de Realengo</title>
+  <link rel="icon" href="img/icone.png">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="row vw-100 vh-100 justify-content-center align-content-center">
+    <form class="ml-4" id="formLogin">
+      <img src="img/logo brigada.jpeg" alt="Brigada de Incêndio" class="mb-2">
+      <input type="email" class="form-control mb-2" id="loginEmail" placeholder="Email" required>
+      <input type="password" class="form-control mb-2" id="loginSenha" placeholder="Senha" required>
+      <button type="submit" class="btn btn-danger btn-block">Entrar</button>
+      <p class="alert-danger" id="loginErro"></p>
+    </form>
+  </div>
+</body>
+
+<script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
+<script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
+<script defer src="/__/firebase/init.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script defer src="js/login.js"></script>
+
 </html>
