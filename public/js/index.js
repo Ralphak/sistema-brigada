@@ -1,5 +1,6 @@
 const auth = firebase.auth(),
-    db = firebase.firestore();
+    db = firebase.firestore(),
+    divPagina = document.getElementById("divPagina");
 var usuario;
 
 //verifica se está autenticado antes de exibir a página
@@ -16,7 +17,13 @@ auth.onAuthStateChanged(user=>{
                 e.preventDefault();
                 auth.signOut();
             });
-            $("#divPagina").load("subpages/pagina-inicial.html");
+            //carregar links da barra de menus
+            let menuLinks = getMenuLinks(usuario.dados.categoria),
+                navbarMenu = document.getElementById("navbarMenu").children[0];
+            Object.keys(menuLinks).forEach(link=>{
+                navbarMenu.innerHTML += `<a class="nav-link" href="#" subpage="${link}">${menuLinks[link]}</a>`;
+            });
+            $("#divPagina").load("subpages/pagina_inicial.html");
             document.body.removeAttribute("hidden");
         });
     } else{
@@ -34,9 +41,23 @@ document.body.addEventListener("click", e=>{
     }
 });
 
-//carregar página de sucesso, com link para retorno
+//carrega página de sucesso, com link para retorno
 function paginaSucesso(mensagem, paginaRetorno){
-    document.getElementById("divPagina").innerHTML = `<p>${mensagem}</p><a href="" subpage="${paginaRetorno}">Voltar</a>`;
+    divPagina.innerHTML = `<p>${mensagem}</p><a href="" subpage="${paginaRetorno}">Voltar</a>`;
+}
+
+//valida se o usuário possui permissão para acessar uma subpágina
+function validarCategoria(categoria){
+    if (categoria != usuario.dados.categoria){
+        $("#divPagina").load("subpages/pagina_inicial.html");
+    }
+}
+
+//retorna os links a serem carregados na barra de menus, dependendo do tipo de usuário
+function getMenuLinks(categoria){
+    switch(categoria){
+        case "admin": return {gerenciar_usuarios:"Gerenciar Usuários"};
+    }
 }
 
 /*TODOs

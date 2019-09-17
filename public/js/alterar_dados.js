@@ -12,7 +12,7 @@ formNovaSenha.addEventListener("submit", e=>{
     botao.setAttribute("disabled","");
     usuario.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(usuario.email, e.target[0].value)).then(()=>{
         usuario.updatePassword(e.target[1].value).then(()=>{
-            paginaSucesso("Senha alterada com sucesso!", "alterar-dados");
+            paginaSucesso("Senha alterada com sucesso!", "alterar_dados");
         }).catch(function(erro) {
             msgErro.innerHTML = erro.message;
             botao.removeAttribute("disabled");
@@ -30,7 +30,7 @@ formNovoEmail.addEventListener("submit", e=>{
     botao.setAttribute("disabled","");
     usuario.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(usuario.email, e.target[1].value)).then(()=>{
         usuario.updateEmail(e.target[0].value).then(()=>{
-            paginaSucesso("Email alterado com sucesso!", "alterar-dados");
+            paginaSucesso("Email alterado com sucesso!", "alterar_dados");
         }).catch(function(erro) {
             msgErro.innerHTML = erro.message;
             botao.removeAttribute("disabled");
