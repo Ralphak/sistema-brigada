@@ -1,6 +1,7 @@
 const auth = firebase.auth(),
     formLogin = document.getElementById("formLogin"),
-    formReset = document.getElementById("formReset");
+    formReset = document.getElementById("formReset"),
+    botao = formLogin.querySelector(".btn");
 
 //redireciona usuários já logados
 auth.onAuthStateChanged(user=>{
@@ -12,12 +13,12 @@ auth.onAuthStateChanged(user=>{
 //autentica o usuário ao enviar os dados
 formLogin.addEventListener("submit", e=>{
     e.preventDefault();
-    auth.signInWithEmailAndPassword(e.target[0].value, e.target[1].value).then(sucesso=>{
-        console.log(sucesso);
+    botao.setAttribute("disabled","");
+    auth.signInWithEmailAndPassword(e.target[0].value, e.target[1].value).then(()=>{
         location.href = "index.html";
     }).catch(erro=>{
-        console.log(erro);
-        let msgErro = document.getElementById("loginErro");
+        botao.removeAttribute("disabled");
+        let msgErro = formLogin.querySelector(".alert-danger");
         switch(erro.code){
             case "auth/user-not-found":
             case "auth/wrong-password":
@@ -46,5 +47,5 @@ document.getElementById("linkBackLogin").addEventListener("click", e=>{
 formReset.addEventListener("submit", e=>{
     e.preventDefault();
     auth.sendPasswordResetEmail(e.target[0].value);
-    document.getElementById("resetEnviado").innerHTML = "Um link de redefinição de senha será enviado ao seu email, caso ele seja cadastrado.";
+    formReset.querySelector(".alert-success").innerHTML = "Um link de redefinição de senha será enviado ao seu email, caso ele seja cadastrado.";
 });

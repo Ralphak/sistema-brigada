@@ -1,1 +1,18 @@
-alterar dados
+<div class="row justify-content-center">
+    <form id="formNovaSenha" class="col-auto mb-4">
+        <input type="password" class="form-control mb-1" placeholder="Senha atual" required>
+        <input type="password" class="form-control mb-1" placeholder="Nova senha" required>
+        <input type="password" class="form-control mb-1" placeholder="Repetir nova senha" required>
+        <button type="submit" class="btn btn-danger btn-block mb-2">Alterar Senha</button>
+        <p class="alert-danger"></p>
+    </form>
+    <form id="formNovoEmail" class="col-auto">
+        <input type="email" class="form-control mb-1" placeholder="Novo email" required>
+        <input type="password" class="form-control mb-1" placeholder="Senha" required>
+        <button type="submit" class="btn btn-danger btn-block mb-2">Alterar Email</button>
+        <p class="alert-danger"></p>
+    </form>
+</div>
+<script>
+    $.getScript("js/alterar-dados.js");
+</script>

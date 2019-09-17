@@ -12,20 +12,20 @@
 
 <body>
   <!-- barra de menus -->
-  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6E1A23; font-size: 1.25rem;">
+  <nav class="navbar navbar-expand-sm navbar-dark sticky-top" style="background-color: #6E1A23; font-size: 1.25rem;">
     <button class="navbar-toggler mr-2 collapsed" type="button" data-toggle="collapse" data-target="#navbarMenu"
       aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand mr-auto" href="#">
-      <img src="img/icone navbar.png" subpage="pagina-inicial.html">
+      <img src="img/icone navbar.png" subpage="pagina-inicial">
     </a>
     <div class="dropdown order-sm-2">
       <a aria-expanded="false" data-toggle="dropdown" role="button" id="navbarDropdownMenuLink" href="#"
         class="dropdown-toggle" style="color: white;"></a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink"
         style="font-size: 1.2rem;">
-        <a class="dropdown-item" href="#" subpage="alterar-dados.html">Alterar senha/email</a>
+        <a class="dropdown-item" href="#" subpage="alterar-dados">Alterar senha/email</a>
         <a class="dropdown-item" href="#" id="linkLogout">Sair</a>
       </div>
     </div>
@@ -37,7 +37,7 @@
     </div>
   </nav>
   <!-- espaço da página carregada -->
-  <div id="divPagina"></div>
+  <div id="divPagina" class="mx-3 my-2"></div>
 </body>
 
 <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
