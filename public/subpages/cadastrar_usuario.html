@@ -1,0 +1,22 @@
+<div class="row justify-content-center">
+    <form id="formCadastroUsuario" class="col-auto">
+        <input class="form-control mb-1" placeholder="Nome completo" required>
+        <input type="email" class="form-control mb-1" placeholder="Email" required>
+        <div class="row justify-content-center mx-auto">
+            <input type="password" class="form-control col" placeholder="Senha temporária" required>
+            <input type="password" class="form-control col" placeholder="Confirmar senha" required>
+        </div>
+        <small class="form-text text-muted mb-2">
+            Tanto o email quanto a senha podem ser trocados pelo usuário.
+        </small>
+        <b>Categoria:</b>
+        <input type="radio" name="categoria" value="aluno" required>Aluno
+        <input type="radio" name="categoria" value="instrutor">Instrutor<br>
+        <b>Foto: </b>
+        <input type="file" class="mb-1" required>
+        <button type="submit" class="btn btn-danger btn-block mb-2">Cadastrar</button>
+        <p class="alert-danger"></p>
+    </form>
+</div>
+
+<script>$.getScript("js/cadastrar_usuario.js");</script>

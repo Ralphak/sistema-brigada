@@ -1,5 +1,6 @@
 const auth = firebase.auth(),
     db = firebase.firestore(),
+    storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
 var usuario;
 
@@ -56,10 +57,12 @@ function validarCategoria(categoria){
 //retorna os links a serem carregados na barra de menus, dependendo do tipo de usuário
 function getMenuLinks(categoria){
     switch(categoria){
-        case "admin": return {gerenciar_usuarios:"Gerenciar Usuários"};
+        case "admin": return {cadastrar_usuario:"Cadastrar Usuário"};
     }
 }
 
 /*TODOs
-    auth.createUserWithEmailAndPassword(email, senha);
+    $(".table").dataTable({
+        "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
+    });
 */
