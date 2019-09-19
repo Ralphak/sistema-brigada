@@ -12,8 +12,12 @@
 </head>
 
 <body>
-  <!-- barra de menus -->
-  <nav class="navbar navbar-expand-sm navbar-dark sticky-top" style="background-color: #6E1A23; font-size: 1.25rem;">
+  <div class="position-fixed d-flex justify-content-center align-items-center vw-100 vh-100">
+    <!-- indicador de carregamento -->
+    <span class="spinner-border text-danger"></span>
+  </div>
+  <!-- barra de menus (a classe sticky-top é adicionada via script) -->
+  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #6E1A23; font-size: 1.25rem; bottom:70px;">
     <button class="navbar-toggler mr-2 collapsed" type="button" data-toggle="collapse" data-target="#navbarMenu"
       aria-expanded="false">
       <span class="navbar-toggler-icon"></span>
@@ -36,7 +40,7 @@
     </div>
   </nav>
   <!-- espaço da página carregada -->
-  <div id="divPagina" class="mx-3 my-2"></div>
+  <div id="divPagina" class="mx-3 my-2 hidden"></div>
 </body>
 
 <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
@@ -48,6 +52,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+<script src="js/moment.min.js"></script>
 <script defer src="js/index.js"></script>
 
 </html>

@@ -5,7 +5,6 @@ const auth = firebase.auth(),
 var usuario;
 
 //verifica se está autenticado antes de exibir a página
-document.body.setAttribute("hidden","");
 auth.onAuthStateChanged(user=>{
     let menuUsuario = document.querySelector(".dropdown-toggle");
     if (user) {
@@ -13,7 +12,7 @@ auth.onAuthStateChanged(user=>{
         db.collection("usuarios").doc(user.uid).get().then(doc=>{
             usuario.dados = doc.data();
             menuUsuario.innerHTML = usuario.dados.nome.split(" ")[0];
-            //logout
+            //criar evento de logout
             document.getElementById("linkLogout").addEventListener("click", e=>{
                 e.preventDefault();
                 auth.signOut();
@@ -24,8 +23,11 @@ auth.onAuthStateChanged(user=>{
             Object.keys(menuLinks).forEach(link=>{
                 navbarMenu.innerHTML += `<a class="nav-link" href="#" subpage="${link}">${menuLinks[link]}</a>`;
             });
+            //exibe a página
             $("#divPagina").load("subpages/pagina_inicial.html");
-            document.body.removeAttribute("hidden");
+            document.querySelector(".spinner-border").parentElement.remove();
+            document.querySelector(".navbar").classList.add("sticky-top");
+            divPagina.removeAttribute("hidden");
         });
     } else{
         usuario = undefined;
@@ -58,6 +60,8 @@ function validarCategoria(categoria){
 function getMenuLinks(categoria){
     switch(categoria){
         case "admin": return {cadastrar_usuario:"Cadastrar Usuário"};
+        case "aluno": return {carteira:"Carteira"};
+        case "instrutor": return {};
     }
 }
 
