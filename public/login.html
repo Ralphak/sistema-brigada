@@ -6,24 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistema Brigada de Realengo</title>
   <link rel="icon" href="img/icone.png">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="plugins/bootstrap.min.css">
 </head>
 
 <body>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center mt-3">
     <form id="formLogin" class="col-auto">
       <img src="img/logo brigada.jpeg" alt="Brigada de Incêndio" class="mb-2 img-fluid">
       <input type="email" class="form-control mb-2" placeholder="Email" required>
       <input type="password" class="form-control mb-2" placeholder="Senha" required>
-      <button type="submit" class="btn btn-danger btn-block mb-2">Entrar</button>
+      <button type="submit" class="btn btn-danger btn-block mb-1">Entrar</button>
       <p class="alert-danger"></p>
       <a href="" id="linkResetPwd">Esqueci minha senha</a>
     </form>
     <form id="formReset" class="col-auto" hidden>
       <label for="resetEmail">Digite o email com o qual foi realizado seu cadastro</label>
       <input type="email" class="form-control mb-2" placeholder="Email" required>
-      <button type="submit" class="btn btn-danger btn-block mb-2">Enviar</button>
+      <button type="submit" class="btn btn-danger btn-block mb-1">Enviar</button>
       <p class="alert-success"></p>
       <a href="" id="linkBackLogin">Voltar</a>
     </form>
@@ -33,9 +32,8 @@
 <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
 <script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
 <script defer src="/__/firebase/init.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="plugins/jquery-3.4.1.min.js"></script>
+<script src="plugins/bootstrap.min.js"></script>
 <script defer src="js/login.js"></script>
 
 </html>

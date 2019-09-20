@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <form id="formCadastroUsuario" class="col-auto">
-        <input class="form-control mb-1" placeholder="Nome completo" required>
+        <input class="form-control mb-1" placeholder="Nome completo" maxlength="25" required>
         <input type="email" class="form-control mb-1" placeholder="Email" required>
         <div class="row mx-auto">
             <input type="password" class="form-control col" placeholder="Senha temporária" required>
@@ -12,7 +12,7 @@
         <b>Categoria:</b>
         <input type="radio" name="categoria" value="aluno" required>Aluno
         <input type="radio" name="categoria" value="instrutor">Instrutor<br>
-        <div id="camposAluno" hidden>
+        <div id="camposAluno" class="mb-3" hidden>
             <div class="row ml-auto align-items-center mb-1">
                 <b class="mr-1">Data de nascimento:</b>
                 <input type="date" class="form-control col-5" required>
@@ -23,12 +23,15 @@
             </div>
             <div class="row mx-auto mb-1">
                 <input class="form-control col-5" placeholder="Tipo Sanguíneo" required>
-                <input class="form-control col" placeholder="Formação" required>
+                <input class="form-control col" placeholder="Formação" maxlength="20" required>
             </div>
             <b>Foto: </b>
-            <input type="file" class="mb-1" required>
+            <input type="file" required>
+            <small class="form-text text-muted">
+                A foto deve estar na proporção 3x4
+            </small>
         </div>
-        <button type="submit" class="btn btn-danger btn-block my-2">Cadastrar</button>
+        <button type="submit" class="btn btn-danger btn-block mb-1">Cadastrar</button>
         <p class="alert-danger"></p>
     </form>
 </div>
