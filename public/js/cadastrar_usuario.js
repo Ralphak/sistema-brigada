@@ -32,12 +32,18 @@ document.getElementsByName("categoria").forEach(radio=>{
 //Envio do cadastro
 document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
     e.preventDefault();
-    let botao = e.target.querySelector(".btn"),
-        msgErro = e.target.querySelector(".alert-danger");
     if(e.target[2].value != e.target[3].value){
         msgErro.innerHTML = "Os campos de nova senha estão diferentes!";
         return;
     }
+    let botao = e.target.querySelector(".btn"),
+        msgErro = e.target.querySelector(".alert-danger"),
+        reader = new FileReader(),
+        fotoString;
+    reader.onload = e=>{
+        fotoString = e.target.result;
+    };
+    reader.readAsDataURL(e.target[11].files[0]);
     botao.setAttribute("disabled","");
     auth2.createUserWithEmailAndPassword(e.target[1].value, e.target[2].value).then(credential=>{
         let objCadastro = {
@@ -53,7 +59,7 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
                 formacao: e.target[10].value,
                 validade: moment().add(1, 'y').format("DD/MM/Y")
             });
-            storageRef.child(`fotos/${credential.user.uid}.${e.target[11].files[0].name.split(".").pop()}`).put(e.target[11].files[0]);
+            storageRef.child(`fotos/${credential.user.uid}.txt`).putString(fotoString);
         }
         db.collection("usuarios").doc(credential.user.uid).set(objCadastro);
         paginaSucesso("Usuário cadastrado com sucesso!", "cadastrar_usuario");

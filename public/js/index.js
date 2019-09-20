@@ -40,7 +40,8 @@ document.body.addEventListener("click", e=>{
     let subpagina = e.target.getAttribute("subpage");
     if(subpagina){
         e.preventDefault();
-        $("#divPagina").load("subpages/" + subpagina + ".html");
+        if(subpagina == "carteira") $.getScript("js/carteira.js");
+        else $("#divPagina").load("subpages/" + subpagina + ".html");
     }
 });
 

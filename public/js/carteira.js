@@ -1,9 +1,11 @@
+validarCategoria("aluno");
+
 var imgFundo = new Image(), imgPerfil = new Image();
 imgFundo.src = "img/logo brigada claro.jpeg";
 
-storageRef.child(`fotos/${usuario.uid}.png`).getDownloadURL().then(url=>{
-    imgPerfil.src = url;
-    let doc = new jsPDF()
+storageRef.child(`fotos/${usuario.uid}.txt`).getDownloadURL().then(url=>{
+    $.get("https://cors-anywhere.herokuapp.com/" + url, imgPerfil=>{
+        let doc = new jsPDF()
         .addImage(imgFundo, 18, 11)
         .addImage(imgFundo, 118.5, 11)
         .addImage(imgPerfil, 9, 34, 30, 40)
@@ -20,16 +22,16 @@ storageRef.child(`fotos/${usuario.uid}.png`).getDownloadURL().then(url=>{
         .roundedRect(180, 24, 21, 8, 2, 2)
         .roundedRect(111, 39, 28, 8, 2, 2)
         .roundedRect(139, 39, 62, 8, 2, 2)
-        .text("21/12/2020", 71, 46.5, "center")
+        .text(usuario.dados.validade, 71, 46.5, "center")
         .setFontSize(14)
-        .text("ABCDEABCDEABCDEABCDEABCDE", 54, 28.5, "center")
+        .text(usuario.dados.nome, 54, 28.5, "center")
         .setFontSize(13)
-        .text("12.345.678-9", 127, 29.5, "center")
-        .text("123.456.789-00", 161.5, 29.5, "center")
-        .text("AB+", 191, 29.5, "center")
-        .text("16/09/1989", 125, 44.5, "center")
+        .text(usuario.dados.rg, 127, 29.5, "center")
+        .text(usuario.dados.cpf, 161.5, 29.5, "center")
+        .text(usuario.dados.tipo_sanguineo, 191, 29.5, "center")
+        .text(usuario.dados.data_nascimento, 125, 44.5, "center")
         .setFontSize(12)
-        .text("ABCDEABCDEABCDEABCDE", 170, 44.5, "center")
+        .text(usuario.dados.formacao, 170, 44.5, "center")
         .setFontSize(11)
         .text("comercialanjosdavida@gmail.com", 71, 71, "center")
         .setFontSize(9)
@@ -56,4 +58,5 @@ storageRef.child(`fotos/${usuario.uid}.png`).getDownloadURL().then(url=>{
         .setFontSize(10)
         .text("Tipo Sang.", 181, 23)
         .save("carteira.pdf");
+    });
 });
