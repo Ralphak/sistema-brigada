@@ -1,8 +1,8 @@
 var imgFundo = new Image(),
     alunosEscolhidos = {},
-    selectAlunos = document.getElementsByTagName("select")[0],
-    listaEscolhidos = document.getElementsByTagName("ul")[0];
-    botaoImprimir = document.getElementById("botao-imprimir");
+    selectAlunos = divPagina.getElementsByTagName("select")[0],
+    listaEscolhidos = document.getElementById("lista-escolhidos");
+    botaoImprimir = divPagina.getElementsByTagName("button")[0];
 imgFundo.src = "img/logo brigada claro.jpeg";
 
 validarCategoria("admin").then(()=>{
@@ -19,11 +19,11 @@ selectAlunos.addEventListener("change", ()=>{
     let id = selectAlunos.value;
     if(!alunosEscolhidos[id]){
         alunosEscolhidos[id] = listaAlunos[id];
-        listaEscolhidos.innerHTML += `<li>${listaAlunos[id].nome} <a href="" class="remover-li" id="${id}">Remover</a></li>`;
-        tinysort("ul>li");
+        listaEscolhidos.innerHTML += `<li>${listaAlunos[id].nome} - <a href="" class="remover-li" id="${id}">Remover</a></li>`;
+        tinysort("ul#lista-escolhidos>li");
         if(botaoImprimir.disabled) botaoImprimir.removeAttribute("disabled");
         
-        document.querySelectorAll(".remover-li").forEach(link=>{
+        divPagina.querySelectorAll(".remover-li").forEach(link=>{
             link.addEventListener("click", e=>{
                 e.preventDefault();
                 e.target.parentElement.remove();
@@ -37,9 +37,10 @@ selectAlunos.addEventListener("change", ()=>{
 
 //botão para imprimir as carteiras
 botaoImprimir.addEventListener("click", ()=>{
-    let usuarios = Object.values(alunosEscolhidos).sort((a,b)=>{return a.nome.localeCompare(b.nome)}),
-        doc = new jsPDF(), espaco=59, contador=-1;
-    for(let i=0; i<usuarios.length; i++){
+    let doc = new jsPDF(), espaco=59, contador=-1;
+    Object.values(alunosEscolhidos).sort((a,b)=>{
+        return a.nome.localeCompare(b.nome);
+    }).forEach(aluno =>{
         //contagem para troca de página
         if(contador == 4){
             doc.addPage();
@@ -70,14 +71,14 @@ botaoImprimir.addEventListener("click", ()=>{
             .setFontSize(14)
             .text(moment().add(1, 'y').format("DD/MM/Y"), 67.5, 27.75 + espaco*contador, "center")
             .setFontSize(13)
-            .text(usuarios[i].nome, 51, 12.6 + espaco*contador, "center")
+            .text(aluno.nome, 51, 12.6 + espaco*contador, "center")
             .setFontSize(12)
-            .text(usuarios[i].rg, 115, 23.6 + espaco*contador, "center")
-            .text(usuarios[i].cpf, 147, 23.6 + espaco*contador, "center")
-            .text(usuarios[i].tipo_sanguineo, 171.6, 23.6 + espaco*contador, "center")
-            .text(usuarios[i].data_nascimento, 112.5, 34.1 + espaco*contador, "center")
+            .text(aluno.rg, 115, 23.6 + espaco*contador, "center")
+            .text(aluno.cpf, 147, 23.6 + espaco*contador, "center")
+            .text(aluno.tipo_sanguineo, 171.6, 23.6 + espaco*contador, "center")
+            .text(aluno.data_nascimento, 112.5, 34.1 + espaco*contador, "center")
             .setFontSize(11)
-            .text(usuarios[i].formacao, 152, 34 + espaco*contador, "center")
+            .text(aluno.formacao, 152, 34 + espaco*contador, "center")
             .setFontSize(9)
             .text("comercialanjosdavida@gmail.com", 67.5, 47 + espaco*contador, "center")
             .setFontSize(8)
@@ -105,7 +106,7 @@ botaoImprimir.addEventListener("click", ()=>{
             .text("Formação", 126, 29.25 + espaco*contador)
             .setFontSize(9)
             .text("Tipo Sang.", 163.5, 18.75 + espaco*contador);
-    }
+    });
     //iniciar download do arquivo de impressão
     doc.save('carteiras.pdf');
 });

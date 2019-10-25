@@ -2,7 +2,7 @@ const auth = firebase.auth(),
     db = firebase.firestore(),
     storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
-var usuario, listaAlunos;
+var usuario, listaAlunos, linkAtivo;
 
 //verifica se está autenticado antes de exibir a página
 auth.onAuthStateChanged(user=>{
@@ -40,6 +40,11 @@ document.body.addEventListener("click", e=>{
     let subpagina = e.target.getAttribute("subpage");
     if(subpagina){
         e.preventDefault();
+        //marca o link clicado como ativo
+        if(linkAtivo) linkAtivo.classList.remove("active");
+        linkAtivo = e.target;
+        linkAtivo.classList.add("active");
+        //carrega a subpágina
         $("#divPagina").load("subpages/" + subpagina + ".html");
     }
 });
@@ -67,14 +72,12 @@ async function validarCategoria(categoria){
 //retorna os links a serem carregados na barra de menus, dependendo do tipo de usuário
 function getMenuLinks(categoria){
     switch(categoria){
-        case "admin": return {cadastrar_usuario:"Cadastrar Usuário", carteiras:"Imprimir Carteiras"};
+        case "admin": return {
+            cadastrar_usuario:"Cadastrar Usuário",
+            gerenciar_boletos:"Gerenciar Boletos",
+            carteiras:"Imprimir Carteiras"
+        };
         case "aluno": return {};
         case "instrutor": return {};
     }
 }
-
-/*TODOs
-    $(".table").dataTable({
-        "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"}
-    });
-*/
