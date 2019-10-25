@@ -37,13 +37,7 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
         return;
     }
     let botao = e.target.querySelector(".btn"),
-        msgErro = e.target.querySelector(".alert-danger"),
-        reader = new FileReader(),
-        fotoString;
-    reader.onload = e=>{
-        fotoString = e.target.result;
-    };
-    reader.readAsDataURL(e.target[11].files[0]);
+        msgErro = e.target.querySelector(".alert-danger");
     botao.setAttribute("disabled","");
     auth2.createUserWithEmailAndPassword(e.target[1].value, e.target[2].value).then(credential=>{
         let objCadastro = {
@@ -52,14 +46,14 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
         };
         if(e.target[4].checked){
             objCadastro = Object.assign(objCadastro, {
+                email: e.target[1].value,
                 data_nascimento: moment(e.target[6].value).format("DD/MM/Y"),
                 rg: e.target[7].value,
                 cpf: e.target[8].value,
                 tipo_sanguineo: e.target[9].value,
-                formacao: e.target[10].value,
-                validade: moment().add(1, 'y').format("DD/MM/Y")
+                formacao: e.target[10].value
             });
-            storageRef.child(`fotos/${credential.user.uid}.txt`).putString(fotoString);
+            listaAlunos[credential.user.uid] = objCadastro;
         }
         db.collection("usuarios").doc(credential.user.uid).set(objCadastro);
         paginaSucesso("Usuário cadastrado com sucesso!", "cadastrar_usuario");

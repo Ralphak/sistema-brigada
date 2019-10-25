@@ -2,14 +2,14 @@ const auth = firebase.auth(),
     db = firebase.firestore(),
     storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
-var usuario;
+var usuario, listaAlunos;
 
 //verifica se está autenticado antes de exibir a página
 auth.onAuthStateChanged(user=>{
     let menuUsuario = document.querySelector(".dropdown-toggle");
     if (user) {
         usuario = user;
-        db.collection("usuarios").doc(user.uid).get().then(doc=>{
+        db.collection("usuarios").doc(usuario.uid).get().then(doc=>{
             usuario.dados = doc.data();
             menuUsuario.innerHTML = usuario.dados.nome.split(" ")[0];
             //criar evento de logout
@@ -40,8 +40,7 @@ document.body.addEventListener("click", e=>{
     let subpagina = e.target.getAttribute("subpage");
     if(subpagina){
         e.preventDefault();
-        if(subpagina == "carteira") $.getScript("js/carteira.js");
-        else $("#divPagina").load("subpages/" + subpagina + ".html");
+        $("#divPagina").load("subpages/" + subpagina + ".html");
     }
 });
 
@@ -51,17 +50,25 @@ function paginaSucesso(mensagem, paginaRetorno){
 }
 
 //valida se o usuário possui permissão para acessar uma subpágina
-function validarCategoria(categoria){
+//também importa os dados necessários ao usuário, de acordo com sua categoria
+async function validarCategoria(categoria){
     if (categoria != usuario.dados.categoria){
         $("#divPagina").load("subpages/pagina_inicial.html");
+    } else if(categoria == "admin"){
+        if(!listaAlunos) await db.collection("usuarios").where("categoria","==","aluno").get().then(docs=>{
+            listaAlunos = {};
+            docs.forEach(doc=>{
+                listaAlunos[doc.id] = doc.data();
+            });
+        });
     }
 }
 
 //retorna os links a serem carregados na barra de menus, dependendo do tipo de usuário
 function getMenuLinks(categoria){
     switch(categoria){
-        case "admin": return {cadastrar_usuario:"Cadastrar Usuário"};
-        case "aluno": return {carteira:"Carteira"};
+        case "admin": return {cadastrar_usuario:"Cadastrar Usuário", carteiras:"Imprimir Carteiras"};
+        case "aluno": return {};
         case "instrutor": return {};
     }
 }

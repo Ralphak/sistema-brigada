@@ -30,6 +30,10 @@ formNovoEmail.addEventListener("submit", e=>{
     botao.setAttribute("disabled","");
     usuario.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(usuario.email, e.target[1].value)).then(()=>{
         usuario.updateEmail(e.target[0].value).then(()=>{
+            if(usuario.dados.categoria == "aluno"){
+                db.collection("usuarios").doc(usuario.uid).update({email: usuario.email});
+                usuario.dados.email = usuario.email;
+            }
             paginaSucesso("Email alterado com sucesso!", "alterar_dados");
         }).catch(function(erro) {
             msgErro.innerHTML = erro.message;
