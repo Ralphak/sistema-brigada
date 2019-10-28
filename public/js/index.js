@@ -77,7 +77,9 @@ function getMenuLinks(categoria){
             gerenciar_boletos:"Gerenciar Boletos",
             carteiras:"Imprimir Carteiras"
         };
-        case "aluno": return {};
+        case "aluno": return {
+            boletos:"Boletos"
+        };
         case "instrutor": return {};
     }
 }
