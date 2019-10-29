@@ -6,6 +6,7 @@ var selectAlunos = divPagina.getElementsByTagName("select")[0],
 
 validarCategoria("admin").then(()=>{
     //criar lista de alunos
+    selectAlunos.innerHTML = "<option disabled>- Escolha um ou mais alunos</option>";
     Object.keys(listaAlunos).forEach(id=>{
         selectAlunos.innerHTML += `<option value="${id}">${listaAlunos[id].nome}</option>`;
     });

@@ -2,7 +2,7 @@ const auth = firebase.auth(),
     db = firebase.firestore(),
     storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
-var usuario, listaAlunos, linkAtivo;
+var usuario, listaAlunos, listaTurmas, linkAtivo;
 
 //verifica se está autenticado antes de exibir a página
 auth.onAuthStateChanged(user=>{
@@ -57,15 +57,31 @@ function paginaSucesso(mensagem, paginaRetorno){
 //valida se o usuário possui permissão para acessar uma subpágina
 //também importa os dados necessários ao usuário, de acordo com sua categoria
 async function validarCategoria(categoria){
-    if (categoria != usuario.dados.categoria){
+    let naoAluno = Boolean(categoria == "naoaluno" && usuario.dados.categoria != "aluno");
+    if (!naoAluno && categoria != usuario.dados.categoria){
         $("#divPagina").load("subpages/pagina_inicial.html");
-    } else if(categoria == "admin"){
+    } else if(categoria != "aluno"){
+        //importar lista de alunos
         if(!listaAlunos) await db.collection("usuarios").where("categoria","==","aluno").get().then(docs=>{
             listaAlunos = {};
             docs.forEach(doc=>{
                 listaAlunos[doc.id] = doc.data();
             });
         });
+        //importar lista de turmas
+        if(!listaTurmas){
+            listaTurmas = {};
+            if(categoria == "admin") await db.collection("turmas").get().then(docs=>{
+                docs.forEach(doc=>{
+                    listaTurmas[doc.id] = doc.data();
+                });
+            });
+            else await db.collection("turmas").where("instrutor","==",usuario.uid).get().then(docs=>{
+                docs.forEach(doc=>{
+                    listaTurmas[doc.id] = doc.data();
+                });
+            });
+        }
     }
 }
 
@@ -75,6 +91,7 @@ function getMenuLinks(categoria){
         case "admin": return {
             cadastrar_usuario:"Cadastrar Usuário",
             gerenciar_boletos:"Gerenciar Boletos",
+            gerenciar_turmas:"Gerenciar Turmas",
             carteiras:"Imprimir Carteiras"
         };
         case "aluno": return {
@@ -83,3 +100,4 @@ function getMenuLinks(categoria){
         case "instrutor": return {};
     }
 }
+//TODO quadro de avisos: console.log(firebase.firestore.Timestamp.now());
