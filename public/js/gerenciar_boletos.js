@@ -35,7 +35,7 @@ selectAlunos.addEventListener("change", ()=>{
                             e.preventDefault();
                             divPagina.querySelector(".modal-body").innerHTML = `Apagar o arquivo ${e.target.id.split("/").pop()}?`;
                             botaoApagar.dataset.path = e.target.id;
-                            $("#confirmar-remocao-boleto").modal()
+                            $("#confirmar-remocao-boleto").modal();
                         });
                     });
                 });

@@ -1,8 +1,10 @@
 <select><option disabled selected>Carregando...</option></select>
-<table class="table">
+<div style="overflow-x:auto"><table class="table" hidden>
     <thead>
       <tr>
         <th>Nome</th>
+        <th>Faltas</th>
+        <th>Faltou hoje</th>
         <th>P1</th>
         <th>P2</th>
         <th>P3</th>
@@ -10,5 +12,27 @@
       </tr>
     </thead>
     <tbody id="tabela-alunos"></tbody>
-</table>
+</table></div>
+<button class="btn btn-danger" onclick="SalvarMudancas(this)" hidden>Salvar Mudanças</button>
+<button class="btn btn-secondary" onclick="EnviarEmails()" hidden>Enviar Emails</button>
+<br><p class="alert-danger mt-2"></p>
+<!-- Modal para exibir as faltas de um aluno -->
+<div class="modal fade" id="modal-faltas" tabindex="-1" role="dialog" aria-labelledby="modalFaltas" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalFaltas">Faltas do aluno</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <!-- Texto preenchido pelo script -->
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+          </div>
+      </div>
+  </div>
+</div>
 <script>$.getScript("js/gerenciar_turmas.js");</script>

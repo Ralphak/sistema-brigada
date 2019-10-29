@@ -18,10 +18,9 @@ auth.onAuthStateChanged(user=>{
                 auth.signOut();
             });
             //carregar links da barra de menus
-            let menuLinks = getMenuLinks(usuario.dados.categoria),
-                navbarMenu = document.getElementById("navbarMenu").children[0];
-            Object.keys(menuLinks).forEach(link=>{
-                navbarMenu.innerHTML += `<a class="nav-link" href="#" subpage="${link}">${menuLinks[link]}</a>`;
+            let navbarMenu = document.getElementById("navbarMenu").children[0];
+            Object.entries(getMenuLinks(usuario.dados.categoria)).forEach(link=>{
+                navbarMenu.innerHTML += `<a class="nav-link" href="#" subpage="${link[0]}" data-toggle="collapse" data-target=".navbar-collapse.show">${link[1]}</a>`;
             });
             //exibe a página
             $("#divPagina").load("subpages/pagina_inicial.html");
@@ -51,14 +50,15 @@ document.body.addEventListener("click", e=>{
 
 //carrega página de sucesso, com link para retorno
 function paginaSucesso(mensagem, paginaRetorno){
-    divPagina.innerHTML = `<p>${mensagem}</p><a href="" subpage="${paginaRetorno}">Voltar</a>`;
+    divPagina.innerHTML = `<p class="alert alert-success">${mensagem}</p>
+        <a href="" subpage="${paginaRetorno}">Voltar</a>`;
 }
 
 //valida se o usuário possui permissão para acessar uma subpágina
 //também importa os dados necessários ao usuário, de acordo com sua categoria
 async function validarCategoria(categoria){
     let naoAluno = Boolean(categoria == "naoaluno" && usuario.dados.categoria != "aluno");
-    if (!naoAluno && categoria != usuario.dados.categoria){
+    if (categoria != usuario.dados.categoria && !naoAluno){
         $("#divPagina").load("subpages/pagina_inicial.html");
     } else if(categoria != "aluno"){
         //importar lista de alunos
@@ -71,7 +71,7 @@ async function validarCategoria(categoria){
         //importar lista de turmas
         if(!listaTurmas){
             listaTurmas = {};
-            if(categoria == "admin") await db.collection("turmas").get().then(docs=>{
+            if(usuario.dados.categoria == "admin") await db.collection("turmas").get().then(docs=>{
                 docs.forEach(doc=>{
                     listaTurmas[doc.id] = doc.data();
                 });
@@ -97,7 +97,8 @@ function getMenuLinks(categoria){
         case "aluno": return {
             boletos:"Boletos"
         };
-        case "instrutor": return {};
+        case "instrutor": return {
+            gerenciar_turmas:"Gerenciar Turmas"
+        };
     }
 }
-//TODO quadro de avisos: console.log(firebase.firestore.Timestamp.now());
