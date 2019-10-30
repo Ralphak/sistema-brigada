@@ -72,6 +72,12 @@ function SalvarMudancas(botao){
             if(!aluno[1].faltas) aluno[1].faltas = [];
             aluno[1].faltas.push(firebase.firestore.Timestamp.now());
         }
+        //correção das datas já gravadas
+        if(aluno[1].faltas){
+            for(let i=0; i<aluno[1].faltas.length; i++){
+                aluno[1].faltas[i] = new firebase.firestore.Timestamp(aluno[1].faltas[i].seconds, aluno[1].faltas[i].nanoseconds);
+            }
+        }
     });
     if(JSON.stringify(dadosNovos.alunos) != JSON.stringify(dadosAlunos)){
         db.collection("turmas").doc(selectTurmas.value).update(dadosNovos).then(()=>{
