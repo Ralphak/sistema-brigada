@@ -11,6 +11,7 @@ validarCategoria("naoaluno").then(()=>{
     });
     tinysort(selectTurmas);
     selectTurmas.selectedIndex = 0;
+    //formulário de nova turma, para administradores
 });
 
 //criar tabela de alunos, com campos para notas e marcação de faltas
@@ -20,26 +21,22 @@ selectTurmas.addEventListener("change", ()=>{
     tabelaAlunos.innerHTML == "";
     dadosAlunos = listaTurmas[selectTurmas.value].alunos;
     Object.entries(dadosAlunos).forEach(aluno=>{
-        let media = "-", p1 = aluno[1].p1, p2 = aluno[1].p2, p3 = aluno[1].p3, faltas = 0;
+        let media = "-", p1 = aluno[1].p1 || "", p2 = aluno[1].p2 || "", p3 = aluno[1].p3 || "", faltas = 0;
+        if (aluno[1].faltas) faltas = `<a href="" class="ver-faltas" data-aluno="${aluno[0]}">${aluno[1].faltas.length}</a>`;
         //calcular média
         if(p1 && p2){
             if(p3) media = (p1+p2+p3)/3;
             else media = (p1+p2)/2;
             media = media.toFixed(2);
         }
-        //tratamento de campos da linha
-        if (aluno[1].faltas) faltas = `<a href="" class="ver-faltas" data-aluno="${aluno[0]}">${aluno[1].faltas.length}</a>`;
-        if (!p1) p1 = `<input type="number" id="p1-${aluno[0]}" min=0 max=10>`;
-        if (!p2) p2 = `<input type="number" id="p2-${aluno[0]}" min=0 max=10>`;
-        if (!p3) p3 = `<input type="number" id="p3-${aluno[0]}" min=0 max=10>`;
         //inserir linha na tabela
         tabelaAlunos.innerHTML += `<tr>
             <td style="white-space: nowrap">${listaAlunos[aluno[0]].nome}</td>
             <td>${faltas}</td>
             <td><input type="checkbox" id="falta-${aluno[0]}"></td>
-            <td>${p1}</td>
-            <td>${p2}</td>
-            <td>${p3}</td>
+            <td><input type="number" id="p1-${aluno[0]}" min=0 max=10 value=${p1}></td>
+            <td><input type="number" id="p2-${aluno[0]}" min=0 max=10 value=${p2}></td>
+            <td><input type="number" id="p3-${aluno[0]}" min=0 max=10 value=${p3}></td>
             <td>${media}</td>
         </tr>`;
     });
@@ -65,9 +62,9 @@ function SalvarMudancas(botao){
         let p1 = document.getElementById(`p1-${aluno[0]}`),
             p2 = document.getElementById(`p2-${aluno[0]}`),
             p3 = document.getElementById(`p3-${aluno[0]}`);
-        if(p1 && p1.value != "") aluno[1].p1 = parseFloat(p1.value);
-        if(p2 && p2.value != "") aluno[1].p2 = parseFloat(p2.value);
-        if(p3 && p3.value != "") aluno[1].p3 = parseFloat(p3.value);
+        if(p1.value != "") aluno[1].p1 = parseFloat(p1.value);
+        if(p2.value != "") aluno[1].p2 = parseFloat(p2.value);
+        if(p3.value != "") aluno[1].p3 = parseFloat(p3.value);
         if(document.getElementById(`falta-${aluno[0]}`).checked) {
             if(!aluno[1].faltas) aluno[1].faltas = [];
             aluno[1].faltas.push(firebase.firestore.Timestamp.now());
@@ -75,7 +72,10 @@ function SalvarMudancas(botao){
         //correção das datas já gravadas
         if(aluno[1].faltas){
             for(let i=0; i<aluno[1].faltas.length; i++){
-                aluno[1].faltas[i] = new firebase.firestore.Timestamp(aluno[1].faltas[i].seconds, aluno[1].faltas[i].nanoseconds);
+                aluno[1].faltas[i] = new firebase.firestore.Timestamp(
+                    aluno[1].faltas[i].seconds,
+                    aluno[1].faltas[i].nanoseconds
+                );
             }
         }
     });

@@ -1,5 +1,6 @@
 <select><option disabled selected>Carregando...</option></select>
-<div style="overflow-x:auto"><table class="table" hidden>
+<div style="overflow-x:auto">
+  <table class="table" hidden>
     <thead>
       <tr>
         <th>Nome</th>
@@ -12,10 +13,20 @@
       </tr>
     </thead>
     <tbody id="tabela-alunos"></tbody>
-</table></div>
+  </table>
+</div>
 <button class="btn btn-danger" onclick="SalvarMudancas(this)" hidden>Salvar Mudanças</button>
 <button class="btn btn-secondary" onclick="EnviarEmails()" hidden>Enviar Emails</button>
 <br><p class="alert-danger mt-2"></p>
+<form id="criar-turma">
+  <hr>
+  <h3>Criar nova turma</h3>
+  <input class="mb-2" placeholder="Nome ou Código"><br>
+  <b>Instrutor: </b>
+  <select class="mb-2"><option disabled selected>Carregando...</option></select><br>
+  <b>Alunos: </b>
+  <select class="mb-2"><option disabled selected>Carregando...</option></select><br>
+</form>
 <!-- Modal para exibir as faltas de um aluno -->
 <div class="modal fade" id="modal-faltas" tabindex="-1" role="dialog" aria-labelledby="modalFaltas" aria-hidden="true">
   <div class="modal-dialog" role="document">

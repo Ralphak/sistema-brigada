@@ -2,7 +2,7 @@ const auth = firebase.auth(),
     db = firebase.firestore(),
     storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
-var usuario, listaAlunos, listaTurmas, linkAtivo;
+var usuario, listaAlunos, listaTurmas, listaInstrutores = {}, linkAtivo;
 
 //verifica se está autenticado antes de exibir a página
 auth.onAuthStateChanged(user=>{
@@ -61,13 +61,22 @@ async function validarCategoria(categoria){
     if (categoria != usuario.dados.categoria && !naoAluno){
         $("#divPagina").load("subpages/pagina_inicial.html");
     } else if(categoria != "aluno"){
-        //importar lista de alunos
-        if(!listaAlunos) await db.collection("usuarios").where("categoria","==","aluno").get().then(docs=>{
+        //importar lista de alunos e instyrutores, no caso do admin
+        if(!listaAlunos){
             listaAlunos = {};
-            docs.forEach(doc=>{
-                listaAlunos[doc.id] = doc.data();
+            if(usuario.dados.categoria == "admin") await db.collection("usuarios").get().then(docs=>{
+                docs.forEach(doc=>{
+                    let docData = doc.data();
+                    if(docData.categoria == "aluno") listaAlunos[doc.id] = docData;
+                    else listaInstrutores[doc.id] = docData;
+                });
             });
-        });
+            else await db.collection("usuarios").where("categoria","==","aluno").get().then(docs=>{
+                docs.forEach(doc=>{
+                    listaAlunos[doc.id] = doc.data();
+                });
+            });
+        }
         //importar lista de turmas
         if(!listaTurmas){
             listaTurmas = {};
