@@ -54,7 +54,7 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
                 formacao: e.target[10].value
             });
             listaAlunos[credential.user.uid] = objCadastro;
-        }
+        } else listaInstrutores[credential.user.uid] = objCadastro;
         db.collection("usuarios").doc(credential.user.uid).set(objCadastro);
         paginaSucesso("Usuário cadastrado com sucesso!", "cadastrar_usuario");
     }).catch(erro=>{

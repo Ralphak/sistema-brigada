@@ -1,1 +1,9 @@
-<script>divPagina.innerHTML = `<p>Boas vindas, ${usuario.dados.nome}!</p>`</script>
+<p></p>
+<div class="alert alert-dark">
+    <h4>Quadro de Avisos (em breve!)</h4>
+    <div class="card card-body">
+        <h6 class="card-title">Site em fase de testes - 01/11/2019 00:00</h6>
+        <p class="card-text">O texto de cada aviso aparecerá aqui.</p>
+    </div>
+</div>
+<script>divPagina.getElementsByTagName("p")[0].innerHTML = `Boas vindas, ${usuario.dados.nome}!`</script>

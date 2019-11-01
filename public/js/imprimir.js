@@ -23,7 +23,7 @@ selectAlunos.addEventListener("change", ()=>{
         listaEscolhidos.innerHTML += `<li>${listaAlunos[id].nome} - <a href="" class="remover-li" id="${id}">Remover</a></li>`;
         tinysort("ul#lista-escolhidos>li");
         if(botaoImprimir.disabled) botaoImprimir.removeAttribute("disabled");
-        
+        //links para remover um aluno da lista
         divPagina.querySelectorAll(".remover-li").forEach(link=>{
             link.addEventListener("click", e=>{
                 e.preventDefault();

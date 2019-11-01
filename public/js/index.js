@@ -61,7 +61,7 @@ async function validarCategoria(categoria){
     if (categoria != usuario.dados.categoria && !naoAluno){
         $("#divPagina").load("subpages/pagina_inicial.html");
     } else if(categoria != "aluno"){
-        //importar lista de alunos e instyrutores, no caso do admin
+        //importar lista de alunos e instrutores
         if(!listaAlunos){
             listaAlunos = {};
             if(usuario.dados.categoria == "admin") await db.collection("usuarios").get().then(docs=>{
@@ -101,7 +101,7 @@ function getMenuLinks(categoria){
             cadastrar_usuario:"Cadastrar Usuário",
             gerenciar_boletos:"Gerenciar Boletos",
             gerenciar_turmas:"Gerenciar Turmas",
-            carteiras:"Imprimir Carteiras"
+            imprimir:"Imprimir Documentos"
         };
         case "aluno": return {
             boletos:"Boletos"
