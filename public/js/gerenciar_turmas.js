@@ -1,19 +1,19 @@
 var dadosAlunos, alunosEscolhidos = {}, botaoEnviar,
-    selectTurmas = divPagina.getElementsByTagName("select")[0],
+    selectTurmas = divPagina.getElementsByTagName("select"),
     tabelaAlunos = document.getElementById("tabela-alunos"),
     msgErro = divPagina.querySelectorAll(".alert-danger"),
     formTurma = document.getElementById("criar-turma");
 
 validarCategoria("naoaluno").then(()=>{
     //criar lista de turmas
-    selectTurmas.innerHTML = "<option disabled>- Escolha uma turma</option>";
+    selectTurmas[0].innerHTML = "<option disabled>- Escolha uma turma</option>";
     Object.keys(listaTurmas).forEach(turma=>{
         let nomeInstrutor = "";
         if(usuario.dados.categoria == "admin") nomeInstrutor = ` (${listaInstrutores[listaTurmas[turma].instrutor].nome})`;
-        selectTurmas.innerHTML += `<option value="${turma}">${turma}${nomeInstrutor}</option>`;
+        selectTurmas[0].innerHTML += `<option value="${turma}">${turma}${nomeInstrutor}</option>`;
     });
-    tinysort(selectTurmas);
-    selectTurmas.selectedIndex = 0;
+    tinysort(selectTurmas[0]);
+    selectTurmas[0].selectedIndex = 0;
     //formulário de nova turma, para administradores
     if(usuario.dados.categoria == "admin"){
         formTurma.innerHTML = `<hr><h3>Criar nova turma</h3>
@@ -49,25 +49,28 @@ validarCategoria("naoaluno").then(()=>{
                 tinysort("ul#lista-escolhidos>li");
                 if(botaoEnviar.disabled) botaoEnviar.removeAttribute("disabled");
                 //links para remover um aluno da lista
-                divPagina.querySelectorAll(".remover-li").forEach(link=>{
-                    link.addEventListener("click", e2=>{
-                        e2.preventDefault();
-                        e2.target.parentElement.remove();
-                        delete alunosEscolhidos[e2.target.id];
-                        if(listaEscolhidos.innerHTML == "") botaoEnviar.setAttribute("disabled", "");
-                    });
-                });
+                divPagina.querySelectorAll(".remover-li").forEach(link => link.addEventListener("click", e2=>{
+                    e2.preventDefault();
+                    e2.target.parentElement.remove();
+                    delete alunosEscolhidos[e2.target.id];
+                    if(listaEscolhidos.innerHTML == "") botaoEnviar.setAttribute("disabled", "");
+                }));
             }
             inputSelect[1].selectedIndex = 0;
         });
     }
-    
 });
 
 //criar tabela de alunos, com campos para notas e marcação de faltas
-selectTurmas.addEventListener("change", ()=>{
+selectTurmas[0].addEventListener("change", ()=>{
+    let listaNovosAlunos = JSON.parse(JSON.stringify(listaAlunos));
     tabelaAlunos.innerHTML = "";
-    dadosAlunos = listaTurmas[selectTurmas.value].alunos;
+    if(dadosAlunos) Object.values(dadosAlunos).forEach(aluno=>{
+        //limpar marcações da turma anterior
+        if(aluno.removerFaltas) delete aluno.removerFaltas;
+    });
+    //criar tabela de alunos na turma
+    dadosAlunos = listaTurmas[selectTurmas[0].value].alunos;
     Object.entries(dadosAlunos).forEach(aluno=>{
         let media = "-", p1 = aluno[1].p1 || "", p2 = aluno[1].p2 || "", p3 = aluno[1].p3 || "", faltas = 0;
         if (aluno[1].faltas) faltas = `<a href="" class="ver-faltas" data-aluno="${aluno[0]}">${aluno[1].faltas.length}</a>`;
@@ -77,7 +80,7 @@ selectTurmas.addEventListener("change", ()=>{
             else media = (p1+p2)/2;
             media = media.toFixed(2);
         }
-        //inserir linha na tabela
+        //inserir linhas na tabela
         tabelaAlunos.innerHTML += `<tr>
             <td style="white-space: nowrap">${listaAlunos[aluno[0]].nome}</td>
             <td>${faltas}</td>
@@ -87,20 +90,36 @@ selectTurmas.addEventListener("change", ()=>{
             <td><input type="number" id="p3-${aluno[0]}" min=0 max=10 value=${p3}></td>
             <td>${media}</td>
         </tr>`;
+        //remover alunos já existentes da lista de novos alunos
+        if(listaNovosAlunos[aluno[0]]) delete listaNovosAlunos[aluno[0]];
     });
-    tabelaAlunos.parentElement.removeAttribute("hidden");
+    //criar lista de alunos novos
+    selectTurmas[1].innerHTML = `<option value="" selected disabled>- Escolha um aluno</option>`;
+    Object.entries(listaNovosAlunos).forEach(alunoNovo=>{
+        selectTurmas[1].innerHTML += `<option value="${alunoNovo[0]}">${alunoNovo[1].nome}</option>`;
+    });
+    //mostrar tabela
+    tabelaAlunos.parentElement.parentElement.removeAttribute("hidden");
     divPagina.querySelectorAll("button").forEach(botao => botao.removeAttribute("hidden"));
-    //links para mostrar faltas
-    document.querySelectorAll(".ver-faltas").forEach(link => link.addEventListener("click", e=>{
+    //mostrar faltas ao clicar no link
+    tabelaAlunos.querySelectorAll(".ver-faltas").forEach(link => link.addEventListener("click", e=>{
         e.preventDefault();
         let modalBody = divPagina.querySelector(".modal-body"),
             aluno = dadosAlunos[e.target.dataset.aluno];
         modalBody.innerHTML = `<p>${listaAlunos[e.target.dataset.aluno].nome}</p><ul>`;
-        aluno.faltas.forEach(falta => {
-            modalBody.innerHTML += `<li>${moment(falta.toDate()).format("DD/MM/Y")}</li>`
-        });
+        for(let i=aluno.faltas.length-1; i>=0; i--){
+            let checked = "";
+            if(aluno.removerFaltas && aluno.removerFaltas[i]) checked = "checked";
+            modalBody.innerHTML += `<li>${moment(aluno.faltas[i].toDate()).format("DD/MM/Y")} -
+                <input type="checkbox" class="remover-falta" value=${i} ${checked}> Remover</li>`;
+        }
         modalBody.innerHTML += "</ul>";
         $("#modal-faltas").modal();
+        //evento de remoção de faltas
+        modalBody.querySelectorAll(".remover-falta").forEach(link => link.addEventListener("click", e2=>{
+            if(!aluno.removerFaltas) aluno.removerFaltas = {};
+            aluno.removerFaltas[e2.target.value] = e2.target.checked;
+        }));
     }));
 });
 
@@ -108,6 +127,7 @@ selectTurmas.addEventListener("change", ()=>{
 function SalvarMudancas(botao){
     botao.setAttribute("disabled","");
     let dadosNovos = {alunos: JSON.parse(JSON.stringify(dadosAlunos))};
+    //atualizar informações dos alunos
     Object.entries(dadosNovos.alunos).forEach(aluno=>{
         let p1 = document.getElementById(`p1-${aluno[0]}`),
             p2 = document.getElementById(`p2-${aluno[0]}`),
@@ -119,19 +139,25 @@ function SalvarMudancas(botao){
             if(!aluno[1].faltas) aluno[1].faltas = [];
             aluno[1].faltas.push(firebase.firestore.Timestamp.now());
         }
-        //correção das datas já gravadas
-        if(aluno[1].faltas){
-            for(let i=0; i<aluno[1].faltas.length; i++){
-                aluno[1].faltas[i] = new firebase.firestore.Timestamp(
-                    aluno[1].faltas[i].seconds,
-                    aluno[1].faltas[i].nanoseconds
-                );
+        if(aluno[1].faltas) for(let i=aluno[1].faltas.length-1; i>=0; i--){
+            //correção das datas já gravadas
+            aluno[1].faltas[i] = new firebase.firestore.Timestamp(
+                aluno[1].faltas[i].seconds,
+                aluno[1].faltas[i].nanoseconds
+            );
+            //remoção das faltas marcadas
+            if(aluno[1].removerFaltas){
+                if(aluno[1].removerFaltas[i]) aluno[1].faltas.splice(i, 1);
+                if(i == 0) delete aluno[1].removerFaltas;
             }
         }
     });
+    //adicionar aluno novo
+    if(selectTurmas[1].value != "") dadosNovos.alunos[selectTurmas[1].value] = {};
+    //enviar ao banco de dados
     if(JSON.stringify(dadosNovos.alunos) != JSON.stringify(dadosAlunos)){
-        db.collection("turmas").doc(selectTurmas.value).update(dadosNovos).then(()=>{
-            listaTurmas[selectTurmas.value].alunos = dadosNovos.alunos;
+        db.collection("turmas").doc(selectTurmas[0].value).update(dadosNovos).then(()=>{
+            listaTurmas[selectTurmas[0].value].alunos = dadosNovos.alunos;
             paginaSucesso("Suas mudanças foram salvas!", "gerenciar_turmas");
         }).catch(erro=>{
             msgErro[0].innerHTML = erro;

@@ -24,14 +24,12 @@ selectAlunos.addEventListener("change", ()=>{
         tinysort("ul#lista-escolhidos>li");
         if(botaoImprimir.disabled) botaoImprimir.removeAttribute("disabled");
         //links para remover um aluno da lista
-        divPagina.querySelectorAll(".remover-li").forEach(link=>{
-            link.addEventListener("click", e=>{
-                e.preventDefault();
-                e.target.parentElement.remove();
-                delete alunosEscolhidos[e.target.id];
-                if(listaEscolhidos.innerHTML == "") botaoImprimir.setAttribute("disabled", "");
-            });
-        });
+        divPagina.querySelectorAll(".remover-li").forEach(link => link.addEventListener("click", e=>{
+            e.preventDefault();
+            e.target.parentElement.remove();
+            delete alunosEscolhidos[e.target.id];
+            if(listaEscolhidos.innerHTML == "") botaoImprimir.setAttribute("disabled", "");
+        }));
     }
     selectAlunos.selectedIndex = 0;
 });
