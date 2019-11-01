@@ -107,7 +107,7 @@ selectTurmas[0].addEventListener("change", ()=>{
         let modalBody = divPagina.querySelector(".modal-body"),
             aluno = dadosAlunos[e.target.dataset.aluno];
         modalBody.innerHTML = `<p>${listaAlunos[e.target.dataset.aluno].nome}</p><ul>`;
-        for(let i=aluno.faltas.length-1; i>=0; i--){
+        for(let i=0; i<aluno.faltas.length; i++){
             let checked = "";
             if(aluno.removerFaltas && aluno.removerFaltas[i]) checked = "checked";
             modalBody.innerHTML += `<li>${moment(aluno.faltas[i].toDate()).format("DD/MM/Y")} -

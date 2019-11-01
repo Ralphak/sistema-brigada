@@ -60,7 +60,18 @@ async function validarCategoria(categoria){
     let naoAluno = Boolean(categoria == "naoaluno" && usuario.dados.categoria != "aluno");
     if (categoria != usuario.dados.categoria && !naoAluno){
         $("#divPagina").load("subpages/pagina_inicial.html");
-    } else if(categoria != "aluno"){
+    } else if(categoria == "aluno"){
+        //importar lista de turmas que o aluno faz parte
+        if(!listaTurmas){
+            listaTurmas = {};
+            await db.collection("turmas").get().then(docs=>{
+                docs.forEach(doc=>{
+                    let docData = doc.data();
+                    if(docData.alunos[usuario.uid]) listaTurmas[doc.id] = docData.alunos[usuario.uid];
+                });
+            });
+        }
+    } else{
         //importar lista de alunos e instrutores
         if(!listaAlunos){
             listaAlunos = {};
@@ -104,7 +115,8 @@ function getMenuLinks(categoria){
             imprimir:"Imprimir Documentos"
         };
         case "aluno": return {
-            boletos:"Boletos"
+            boletos:"Boletos",
+            turmas:"Turmas"
         };
         case "instrutor": return {
             gerenciar_turmas:"Gerenciar Turmas"

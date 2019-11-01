@@ -13,6 +13,12 @@ validarCategoria("aluno").then(()=>{
                     </li>`;
                 });
             });
+            divPagina.querySelector("button").removeAttribute("hidden");
         }
     });
 });
+
+//ordenar a lista de boletos alfabeticamente
+function Ordenar(){
+    tinysort("ul>li>a");
+}

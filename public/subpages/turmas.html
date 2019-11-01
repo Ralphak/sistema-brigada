@@ -1,0 +1,36 @@
+<p>Por favor aguarde...</p>
+<div style="overflow-x:auto" hidden>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Turma</th>
+            <th>Faltas</th>
+            <th>P1</th>
+            <th>P2</th>
+            <th>P3</th>
+            <th>Média</th>
+        </tr>
+        </thead>
+        <tbody id="tabela-turmas"></tbody>
+    </table>
+</div>
+<!-- Modal para exibir as faltas -->
+<div class="modal fade" id="modal-faltas" tabindex="-1" role="dialog" aria-labelledby="modalFaltas" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFaltas">Suas faltas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Texto preenchido pelo script -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>$.getScript("js/turmas.js");</script>
