@@ -7,10 +7,12 @@ validarCategoria("aluno").then(()=>{
         } else{
             listaBoletos.innerHTML = "";
             lista.items.forEach(boleto=>{
-                storageRef.child(boleto.fullPath).getDownloadURL().then(downloadURL =>{
-                    listaBoletos.innerHTML += `<li class="list-group-item">
+                if(boletosSalvos[boleto.name]) listaBoletos.innerHTML += boletosSalvos[boleto.name];
+                else storageRef.child(boleto.fullPath).getDownloadURL().then(downloadURL =>{
+                    boletosSalvos[boleto.name] = `<li class="list-group-item">
                         <a href="${downloadURL}" target="_blank">${boleto.name}</a>
                     </li>`;
+                    listaBoletos.innerHTML += boletosSalvos[boleto.name];
                 });
             });
             divPagina.querySelector("button").removeAttribute("hidden");

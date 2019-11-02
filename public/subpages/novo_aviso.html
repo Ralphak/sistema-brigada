@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+    <form class="col-auto">
+        <h5>Novo Aviso</h5>
+        <input class="form-control mb-2" placeholder="Título" required>
+        <textarea class="form-control mb-2" placeholder="Texto do aviso" rows="5" cols="30" style="resize: none;" required></textarea>
+        <div class="row">
+            <b class="col-auto mt-1">Limite de avisos (1 a 10):</b>
+            <input type="number" class="form-control col-2" id="limite-avisos" min="1" max="10">
+        </div>
+        <small class="text-muted">Os avisos mais antigos que excederem o limite serão removidos.</small>
+        <button type="submit" class="btn btn-danger btn-block my-2">Enviar</button>
+        <p class="alert-danger px-1"></p>
+    </form>
+</div>
+<script>$.getScript("js/novo_aviso.js");</script>

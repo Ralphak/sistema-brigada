@@ -1,5 +1,8 @@
 validarCategoria("admin");
 
+var botao = divPagina.querySelector(".btn"),
+    msgErro = divPagina.querySelector(".alert-danger");
+
 //Para evitar que o firebase troque de conta, é criada uma nova instância do app, onde será feita o registro do novo usuário.
 var auth2;
 if(firebase.apps[1]){
@@ -36,8 +39,6 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
         msgErro.innerHTML = "Os campos de nova senha estão diferentes!";
         return;
     }
-    let botao = e.target.querySelector(".btn"),
-        msgErro = e.target.querySelector(".alert-danger");
     botao.setAttribute("disabled","");
     auth2.createUserWithEmailAndPassword(e.target[1].value, e.target[2].value).then(credential=>{
         let objCadastro = {
@@ -55,8 +56,14 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
             });
             listaAlunos[credential.user.uid] = objCadastro;
         } else listaInstrutores[credential.user.uid] = objCadastro;
-        db.collection("usuarios").doc(credential.user.uid).set(objCadastro);
-        paginaSucesso("Usuário cadastrado com sucesso!", "cadastrar_usuario");
+        db.collection("usuarios").doc(credential.user.uid).set(objCadastro).then(()=>{
+            paginaSucesso("Usuário cadastrado com sucesso!", "cadastrar_usuario");
+        }).catch(erro=>{
+            msgErro.innerHTML = `O usuário foi criado, mas houve um erro ao inserir os dados no banco.
+                Antes de tentar de novo, entre no painel do Firebase e exclua a conta criada em Authentication.
+                Mensagem do erro: ${erro.message}`;
+            botao.removeAttribute("disabled");
+        });
     }).catch(erro=>{
         msgErro.innerHTML = erro.message;
         botao.removeAttribute("disabled");

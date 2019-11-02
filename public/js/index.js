@@ -1,8 +1,9 @@
+//Variáveis globais
 const auth = firebase.auth(),
     db = firebase.firestore(),
     storageRef = firebase.storage().ref(),
     divPagina = document.getElementById("divPagina");
-var usuario, listaAlunos, listaTurmas, listaInstrutores = {}, linkAtivo;
+var usuario, listaAlunos, listaTurmas, listaInstrutores = {}, linkAtivo, boletosSalvos = {}, listaAvisos;
 
 //verifica se está autenticado antes de exibir a página
 auth.onAuthStateChanged(user=>{
@@ -22,11 +23,15 @@ auth.onAuthStateChanged(user=>{
             Object.entries(getMenuLinks(usuario.dados.categoria)).forEach(link=>{
                 navbarMenu.innerHTML += `<a class="nav-link" href="#" subpage="${link[0]}" data-toggle="collapse" data-target=".navbar-collapse.show">${link[1]}</a>`;
             });
-            //exibe a página
-            $("#divPagina").load("subpages/pagina_inicial.html");
-            document.querySelector(".spinner-border").parentElement.remove();
-            document.querySelector(".navbar").classList.add("sticky-top");
-            divPagina.removeAttribute("hidden");
+            //importar avisos do banco de dados
+            db.collection("outros").doc("avisos").get().then(doc=>{
+                listaAvisos = doc.data();
+                //exibe a página
+                $("#divPagina").load("subpages/pagina_inicial.html");
+                document.querySelector(".spinner-border").parentElement.remove();
+                document.querySelector(".navbar").classList.add("sticky-top");
+                divPagina.removeAttribute("hidden");
+            });
         });
     } else{
         usuario = undefined;
