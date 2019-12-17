@@ -115,6 +115,7 @@ function getMenuLinks(categoria){
     switch(categoria){
         case "admin": return {
             cadastrar_usuario:"Cadastrar Usuário",
+            alterar_usuario:"Alterar Usuário",
             gerenciar_turmas:"Turmas",
             gerenciar_boletos:"Boletos",
             gerenciar_arquivos:"Arquivos",

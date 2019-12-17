@@ -1,14 +1,7 @@
+<select><option disabled selected>Carregando...</option></select>
 <div class="row justify-content-center">
-    <form id="formCadastroUsuario" class="col-auto">
+    <form id="formAlterarUsuario" class="col-auto mt-2" hidden>
         <input class="form-control mb-1" placeholder="Nome completo" required>
-        <input type="email" class="form-control mb-1" placeholder="Email" required>
-        <div class="row mx-auto">
-            <input type="password" class="form-control col" placeholder="Senha temporária" required>
-            <input type="password" class="form-control col" placeholder="Confirmar senha" required>
-        </div>
-        <small class="form-text text-muted mb-2">
-            Tanto o email quanto a senha podem ser trocados pelo usuário.
-        </small>
         <b>Categoria:</b>
         <input type="radio" name="categoria" value="aluno" required>Aluno
         <input type="radio" name="categoria" value="instrutor">Instrutor
@@ -16,7 +9,7 @@
         <div id="camposAluno" class="mb-3" hidden>
             <div class="row ml-auto align-items-center mb-1">
                 <b class="mr-1">Data de nascimento:</b>
-                <input type="date" class="form-control col-5" required>
+                <input class="form-control col-5" required>
             </div>
             <div class="row mx-auto mb-1">
                 <input class="form-control col" placeholder="RG" required>
@@ -40,9 +33,9 @@
                 Inclua pontos e traços tanto no RG quanto no CPF.
             </small>
         </div>
-        <button type="submit" class="btn btn-danger btn-block mb-1">Cadastrar</button>
+        <button type="submit" class="btn btn-danger btn-block mb-1">Salvar Mudanças</button>
         <p class="alert-danger px-1"></p>
     </form>
 </div>
 
-<script>$.getScript("js/cadastrar_usuario.js");</script>
+<script>$.getScript("js/alterar_usuario.js");</script>
