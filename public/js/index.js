@@ -115,13 +115,15 @@ function getMenuLinks(categoria){
     switch(categoria){
         case "admin": return {
             cadastrar_usuario:"Cadastrar Usuário",
-            gerenciar_boletos:"Gerenciar Boletos",
-            gerenciar_turmas:"Gerenciar Turmas",
-            imprimir:"Imprimir Documentos"
+            gerenciar_turmas:"Turmas",
+            gerenciar_boletos:"Boletos",
+            gerenciar_arquivos:"Arquivos",
+            imprimir:"Imprimir Carteiras"
         };
         case "aluno": return {
+            turmas:"Turmas",
             boletos:"Boletos",
-            turmas:"Turmas"
+            arquivos:"Arquivos"
         };
         case "instrutor": return {
             gerenciar_turmas:"Gerenciar Turmas"
