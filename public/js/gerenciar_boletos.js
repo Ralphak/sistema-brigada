@@ -25,16 +25,18 @@ selectAlunos.addEventListener("change", ()=>{
             listaBoletos.innerHTML = "";
             lista.items.forEach(boleto=>{
                 storageRef.child(boleto.fullPath).getDownloadURL().then(downloadURL =>{
+                    //adiciona um arquivo à lista
                     listaBoletos.innerHTML += `<li>
                         <a href="${downloadURL}" target="_blank">${boleto.name}</a> - 
-                        <a href="" class="apagar-boleto" id="${boleto.fullPath}">Apagar</a>
+                        <a href="" class="apagar-boleto" id="${boleto.fullPath}"><img src="img/x.svg" title="Apagar"></a>
                     </li>`;
+                    tinysort("ul>li");
                     //mostra um modal ao clicar em apagar
                     document.querySelectorAll(".apagar-boleto").forEach(link=>{
                         link.addEventListener("click", e=>{
                             e.preventDefault();
-                            divPagina.querySelector(".modal-body").innerHTML = `Apagar o arquivo ${e.target.id.split("/").pop()}?`;
-                            botaoApagar.dataset.path = e.target.id;
+                            divPagina.querySelector(".modal-body").innerHTML = `Apagar o arquivo ${e.target.parentElement.id.split("/").pop()}?`;
+                            botaoApagar.dataset.path = e.target.parentElement.id;
                             $("#confirmar-remocao-boleto").modal();
                         });
                     });

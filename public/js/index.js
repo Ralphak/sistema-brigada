@@ -118,13 +118,12 @@ function getMenuLinks(categoria){
             alterar_usuario:"Alterar Usuário",
             gerenciar_turmas:"Turmas",
             gerenciar_boletos:"Boletos",
-            gerenciar_arquivos:"Arquivos",
-            imprimir:"Imprimir Carteiras"
+            arquivos:"Meus Arquivos",
+            imprimir:"Carteiras"
         };
         case "aluno": return {
             turmas:"Turmas",
-            boletos:"Boletos",
-            arquivos:"Arquivos"
+            boletos:"Boletos"
         };
         case "instrutor": return {
             gerenciar_turmas:"Gerenciar Turmas"
