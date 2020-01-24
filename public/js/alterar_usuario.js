@@ -1,7 +1,8 @@
 var selectUsuarios = divPagina.getElementsByTagName("select")[0],
     listaUsuarios = {};
     formAlterarUsuario = document.getElementById("formAlterarUsuario"),
-    msgErro = divPagina.querySelector(".alert-danger");
+    msgErro = divPagina.querySelector(".alert-danger"),
+    botao = divPagina.querySelector(".btn");
 
 validarCategoria("admin").then(()=>{
     //criar lista de usuários
