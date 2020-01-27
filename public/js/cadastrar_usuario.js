@@ -48,11 +48,11 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
         if(e.target[4].checked){
             objCadastro = Object.assign(objCadastro, {
                 email: e.target[1].value,
-                data_nascimento: moment(e.target[6].value).format("DD/MM/Y"),
-                rg: e.target[7].value,
-                cpf: e.target[8].value,
-                tipo_sanguineo: e.target[9].value,
-                formacao: e.target[10].value
+                data_nascimento: moment(e.target[7].value).format("DD/MM/Y"),
+                rg: e.target[8].value,
+                cpf: e.target[9].value,
+                tipo_sanguineo: e.target[10].value,
+                formacao: e.target[11].value
             });
             listaAlunos[credential.user.uid] = objCadastro;
         } else listaInstrutores[credential.user.uid] = objCadastro;
