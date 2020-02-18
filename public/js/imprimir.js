@@ -13,10 +13,11 @@ validarCategoria("admin").then(()=>{
     });
     tinysort(selectAlunos);
     selectAlunos.selectedIndex = 0;
+    $("select").select2();
 });
 
 //adiciona itens à lista e cria um link para remoção
-selectAlunos.addEventListener("change", ()=>{
+$("select").on("change", ()=>{
     let id = selectAlunos.value;
     if(!alunosEscolhidos[id]){
         alunosEscolhidos[id] = listaAlunos[id];

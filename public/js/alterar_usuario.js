@@ -6,14 +6,22 @@ var selectUsuarios = divPagina.getElementsByTagName("select")[0],
 
 validarCategoria("admin").then(()=>{
     //criar lista de usuários
-    selectUsuarios.innerHTML = "<option disabled>- Escolha um usuário</option>";
+    selectUsuarios.innerHTML = `<option disabled>- Escolha um usuário</option>
+        <optgroup name="aluno" label="Alunos"></optgroup>
+        <optgroup name="instrutor" label="Instrutores"></optgroup>
+        <optgroup name="admin" label="Administradores"></optgroup>
+    `;
     Object.assign(listaUsuarios, listaAlunos);
     Object.assign(listaUsuarios, listaInstrutores);
     Object.keys(listaUsuarios).forEach(id=>{
-        selectUsuarios.innerHTML += `<option value="${id}">${listaUsuarios[id].categoria} - ${listaUsuarios[id].nome}</option>`;
+        selectUsuarios.querySelector(`optgroup[name="${listaUsuarios[id].categoria}"]`)
+            .innerHTML += `<option value="${id}">${listaUsuarios[id].nome}</option>`;
     });
-    tinysort(selectUsuarios);
+    ["aluno", "instrutor", "admin"].forEach(categoria=>
+        tinysort(`optgroup[name="${categoria}"]>option`)        
+    );
     selectUsuarios.selectedIndex = 0;
+    $("select").select2();
 });
 
 //Exibe ou esconde os campos para alunos
@@ -29,7 +37,7 @@ document.getElementsByName("categoria").forEach(radio=>{
 });
 
 //Criar o formulário
-selectUsuarios.addEventListener("change", ()=>{
+$("select").on("change", ()=>{
     formAlterarUsuario[0].value = listaUsuarios[selectUsuarios.value].nome;
     switch(listaUsuarios[selectUsuarios.value].categoria){
         case "aluno":

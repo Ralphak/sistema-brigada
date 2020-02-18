@@ -17,13 +17,13 @@ validarCategoria("naoaluno").then(()=>{
     //formulário de nova turma, para administradores
     if(usuario.dados.categoria == "admin"){
         formTurma.innerHTML = `<hr><h3>Criar nova turma</h3>
-            <div class="mb-3"><input placeholder="Nome ou Código" required>
+            <div class="mb-3"><input placeholder="Nome ou Código" required size=40>
             <small class="text-muted"><b>CUIDADO:</b> Turmas com o mesmo nome serão sobrescritas!</small></div>
             <div class="mb-3"><b>Instrutor: </b>
             <select required><option disabled selected>Carregando...</option></select>
             <small class="text-muted">Inclui também contas de administradores</small></div>
             <b>Alunos: </b>
-            <select class="mb-1"><option disabled selected>Carregando...</option></select>
+            <select class="mb-1" id="select-alunos"><option disabled selected>Carregando...</option></select>
             <ul id="lista-escolhidos"></ul>
             <button type="submit" class="btn btn-danger" disabled>Enviar</button>
             <br><p class="alert-danger mt-2"></p>`;
@@ -39,8 +39,8 @@ validarCategoria("naoaluno").then(()=>{
         ); tinysort(inputSelect[1]);
         inputSelect[0].selectedIndex = 0; inputSelect[1].selectedIndex = 0;
         //atualizar lista de alunos
-        inputSelect[1].addEventListener("change", e=>{
-            let id = e.target.value,
+        $("#select-alunos").select2().on("change", ()=>{
+            let id = inputSelect[1].value,
                 listaEscolhidos = document.getElementById("lista-escolhidos");
             botaoEnviar = formTurma.getElementsByTagName("button")[0];
             if(!alunosEscolhidos[id]){
@@ -59,10 +59,13 @@ validarCategoria("naoaluno").then(()=>{
             inputSelect[1].selectedIndex = 0;
         });
     }
+    $("select").select2({
+        dropdownAutoWidth: true
+    });
 });
 
 //criar tabela de alunos, com campos para notas e marcação de faltas
-selectTurmas[0].addEventListener("change", ()=>{
+$("#select-turmas").on("change", ()=>{
     let listaNovosAlunos = JSON.parse(JSON.stringify(listaAlunos));
     tabelaAlunos.innerHTML = "";
     if(dadosAlunos) Object.values(dadosAlunos).forEach(aluno=>{
@@ -93,11 +96,14 @@ selectTurmas[0].addEventListener("change", ()=>{
         //remover alunos já existentes da lista de novos alunos
         if(listaNovosAlunos[aluno[0]]) delete listaNovosAlunos[aluno[0]];
     });
+    tinysort("#tabela-alunos>tr");
     //criar lista de alunos novos
     selectTurmas[1].innerHTML = `<option value="" selected disabled>- Escolha um aluno</option>`;
     Object.entries(listaNovosAlunos).forEach(alunoNovo=>{
         selectTurmas[1].innerHTML += `<option value="${alunoNovo[0]}">${alunoNovo[1].nome}</option>`;
     });
+    tinysort(selectTurmas[1]);
+    selectTurmas[1].selectedIndex = 0;
     //mostrar tabela
     tabelaAlunos.parentElement.parentElement.removeAttribute("hidden");
     divPagina.querySelectorAll("button").forEach(botao => botao.removeAttribute("hidden"));

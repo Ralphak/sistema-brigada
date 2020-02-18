@@ -12,10 +12,11 @@ validarCategoria("admin").then(()=>{
     });
     tinysort(selectAlunos);
     selectAlunos.selectedIndex = 0;
+    $("select").select2();
 });
 
 //Listar os boletos do aluno escolhido
-selectAlunos.addEventListener("change", ()=>{
+$("select").on("change", ()=>{
     formBoletos.setAttribute("hidden","");
     listaBoletos.innerHTML = "Por favor aguarde...";
     storageRef.child(`boletos/${selectAlunos.value}`).listAll().then(lista=>{
