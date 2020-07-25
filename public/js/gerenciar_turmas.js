@@ -189,9 +189,12 @@ formTurma.addEventListener("submit", e=>{
         instrutor: e.target[1].value,
         alunos: alunosEscolhidos
     }
+    //Substitui o / por - no nome da turma. O caractere / não é permitido em uma id no Firestore.
+    let nomeTurma = e.target[0].value.replaceAll('/','-');
+
     botaoEnviar.setAttribute("disabled","");
-    db.collection("turmas").doc(e.target[0].value).set(novaTurma).then(()=>{
-        listaTurmas[e.target[0].value] = novaTurma;
+    db.collection("turmas").doc(nomeTurma).set(novaTurma).then(()=>{
+        listaTurmas[nomeTurma] = novaTurma;
         paginaSucesso("Turma criada com sucesso!", "gerenciar_turmas");
     }).catch(erro=>{
         msgErro[1].innerHTML = erro;
