@@ -48,6 +48,7 @@ $("select").on("change", ()=>{
             formAlterarUsuario[6].value = listaUsuarios[selectUsuarios.value].cpf;
             formAlterarUsuario[7].value = listaUsuarios[selectUsuarios.value].tipo_sanguineo;
             formAlterarUsuario[8].value = listaUsuarios[selectUsuarios.value].formacao;
+            formAlterarUsuario[9].value = listaUsuarios[selectUsuarios.value].matricula || "";
             break;
         case "instrutor":
             divCamposAluno.innerHTML = "";
@@ -75,7 +76,8 @@ formAlterarUsuario.addEventListener("submit", e=>{
             rg: e.target[5].value,
             cpf: e.target[6].value,
             tipo_sanguineo: e.target[7].value,
-            formacao: e.target[8].value
+            formacao: e.target[8].value,
+            matricula: e.target[9].value
         });
         listaAlunos[selectUsuarios.value] = objCadastro;
     } else listaInstrutores[selectUsuarios.value] = objCadastro;

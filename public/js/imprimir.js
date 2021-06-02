@@ -3,7 +3,7 @@ var imgFundo = new Image(),
     selectAlunos = divPagina.getElementsByTagName("select")[0],
     listaEscolhidos = document.getElementById("lista-escolhidos");
     botaoImprimir = divPagina.getElementsByTagName("button")[0];
-imgFundo.src = "img/logo brigada claro.jpeg";
+imgFundo.src = "img/logo brigada claro.jpg";
 
 validarCategoria("admin").then(()=>{
     //criar lista de alunos
@@ -60,7 +60,8 @@ botaoImprimir.addEventListener("click", ()=>{
             .setLineWidth(.5)
             .rect(10.75, 18.5 + espaco*contador, 30, 39)
             .roundedRect(11, 10 + espaco*contador, 80, 6, 2, 2)
-            .roundedRect(49.5, 25 + espaco*contador, 36, 6, 2, 2)
+            .roundedRect(49.5, 24 + espaco*contador, 36, 6, 2, 2)
+            .roundedRect(49.5, 37 + espaco*contador, 36, 6, 2, 2)
             .roundedRect(100, 21.5 + espaco*contador, 30, 5.25, 1, 1)
             .roundedRect(130, 21.5 + espaco*contador, 34, 5.25, 1, 1)
             .roundedRect(164, 21.5 + espaco*contador, 15, 5.25, 1, 1)
@@ -69,7 +70,8 @@ botaoImprimir.addEventListener("click", ()=>{
             .setFontStyle("normal")
             .setTextColor(0, 0, 0)
             .setFontSize(14)
-            .text(moment().add(1, 'y').format("DD/MM/Y"), 67.5, 29.75 + espaco*contador, "center")
+            .text(aluno.matricula || " ", 67.5, 28.75 + espaco*contador, "center")
+            .text(moment().add(1, 'y').format("DD/MM/Y"), 67.5, 41.75 + espaco*contador, "center")
             .setFontSize(13)
             .text(aluno.nome, 51, 14.6 + espaco*contador, "center")
             .setFontSize(12)
@@ -79,11 +81,9 @@ botaoImprimir.addEventListener("click", ()=>{
             .text(aluno.data_nascimento, 112.5, 36.1 + espaco*contador, "center")
             .setFontSize(11)
             .text(aluno.formacao, 152, 36 + espaco*contador, "center")
-            .setFontSize(9)
-            .text("comercialanjosdavida@gmail.com", 67.5, 49 + espaco*contador, "center")
             .setFontSize(8)
-            .text("CENTRO DE ENSINO PROFISSIONAL", 67.5, 39.5 + espaco*contador, "center")
-            .text("ANJOS DA VIDA", 67.5, 43 + espaco*contador, "center")
+            .text("CENTRO DE ENSINO PROFISSIONAL", 67.5, 49.5 + espaco*contador, "center")
+            .text("ANJOS DA VIDA", 67.5, 53 + espaco*contador, "center")
             .text("Assinatura do Diretor", 139.5, 47.5 + espaco*contador, "center")
             .setFontStyle("bold")
             .text("Carteira Estudantil", 139.5, 8.5 + espaco*contador, "center")
@@ -91,13 +91,14 @@ botaoImprimir.addEventListener("click", ()=>{
             .text("Leis 12852 e 12933 Dezembro 2013", 139.5, 14.5 + espaco*contador, "center")
             .text("Centro de Ensino Profissional Anjos da Vida", 139.5, 52 + espaco*contador, "center")
             .text("CNPJ: 41.515.954/0001-14", 139.5, 55 + espaco*contador, "center")
-            .text("Mat Municipal / RJ 056958-2", 139.5, 58 + espaco*contador, "center")
+            .text("comercialanjosdavida@gmail.com", 139.5, 58 + espaco*contador, "center")
             .setTextColor(200, 0, 0)
             .setFontSize(6)
             .text("Válido com apresentação de documento com foto", 67.5, 57 + espaco*contador, "center")
             .setFontSize(11)
             .text("Nome", 12, 9 + espaco*contador)
-            .text("Validade", 50.5, 24 + espaco*contador)
+            .text("Matrícula", 50.5, 23 + espaco*contador)
+            .text("Validade", 50.5, 36 + espaco*contador)
             .text("FOTO", 25.75, 39 + espaco*contador, "center")
             .setFontSize(10)
             .text("RG", 101, 20.75 + espaco*contador)

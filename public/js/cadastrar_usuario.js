@@ -52,7 +52,8 @@ document.getElementById("formCadastroUsuario").addEventListener("submit", e=>{
                 rg: e.target[8].value,
                 cpf: e.target[9].value,
                 tipo_sanguineo: e.target[10].value,
-                formacao: e.target[11].value
+                formacao: e.target[11].value,
+                matricula: e.target[12].value
             });
             listaAlunos[credential.user.uid] = objCadastro;
         } else listaInstrutores[credential.user.uid] = objCadastro;
